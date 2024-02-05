@@ -1,4 +1,6 @@
-public class Duck extends Animals{
+import animals.Animal;
+
+public class Duck extends Animal {
 
     public Duck(String name){
         super(name);
