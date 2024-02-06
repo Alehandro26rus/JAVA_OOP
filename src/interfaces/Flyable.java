@@ -1,2 +1,5 @@
-package interfaces;public class Flyable {
+package org.example.interfaces;
+
+public interface Flyable {
+    double fly();
 }
