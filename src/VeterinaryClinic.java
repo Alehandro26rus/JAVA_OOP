@@ -1,70 +1,123 @@
-``package org.example;
+package org.example;
 
-import org.example.animals.*;
-import org.example.personal.Doctor;
-import org.example.personal.Nurse;
+import org.example.animals.Animal;
+import org.example.interfaces.Flyable;
+import org.example.interfaces.Goable;
+import org.example.interfaces.Swimable;
+import org.example.personal.Personal;
+import java.util.ArrayList;
+import java.util.List;
 
-public class Main {
+public class VeterinaryClinic {
 
-    public static void main(String[] args) {
-// создаем экземпляр класса нашей клиники
-        VeterinaryClinic clinic = new VeterinaryClinic();
+    //Придумываем поля для нашего класса. Для начала и вообще - private
+    // Во-первых нужен список персонала. Создадим под персонал отдельный класс
+    private List<Personal> personal;
+    //нужен также список животных
+    private List<Animal> patients;
+    // почему таким способом не совсем понятно, но узнаем позже
 
-// создаем экземпляры животных для нашей клиники
-        Animal kuzya = new Parrot("Кузя", new Illness("слабость"), 2022);
-        Animal jack = new Dog("Джек");
-        Animal donald = new Duck("Дональд");
-        Animal vanda = new Guppy("Ванда");
-        Animal dog = new Dog();
+    public VeterinaryClinic() {
+        this.personal = new ArrayList<>();
+        this.patients = new ArrayList<>();
+    }
 
-// заполняем одно из полей класса clinic информацией о пациентах
-        clinic.addPatient(kuzya);
-        clinic.addPatient(jack);
-        clinic.addPatient(donald);
-        clinic.addPatient(vanda);
-        clinic.addPatient(dog);
+    public void addPatient(Animal a) {
+        patients.add(a);
+    }
 
-        //1.Вывод списка пациентов (тип, имя, ГР, диагноз)
-        clinic.getPatients();
-        System.out.println("-------------------------------------------------------------");
+    // выписка пациента
+    public void removePatient(Animal p) {
+        System.out.println("-------------");
+        patients.remove(p);
+        System.out.println(p + " - вылечен");
+        System.out.println("-------------");
+    }
 
-        //2. Вывод списка пациентов с доп. информацией по движениям
-        clinic.getProfiles();
-        System.out.println("-------------------------------------------------------------");
+    public void addPersonal(Personal a) {
+        personal.add(a);
+    }
 
-        //фильтрация пациентов по способам передвижения
-        clinic.getGoables();
-        clinic.getFlyables();
-        clinic.getSwimables();
+    public void getPatients() {
+        System.out.println("-------------");
+        System.out.println("Список пациентов ветеринарной клиники:");
+        for (Animal a : patients) {
+            System.out.println(a);
+        }
+        System.out.println("-------------");
+    }
 
-        //выписка пациента и вывод нового списка пациентов клиники
-        clinic.removePatient(kuzya);
-        clinic.getPatients();
+    public void addEmployee(Personal employee) {
+        personal.add(employee);
+    }
 
-        System.out.println("-------------------------------------------------------------");
-        //создаем экземпляры персонала для нашей клиники
-        Nurse amanda = new Nurse("Аманда Колобкова", 2000);
-        Nurse lenka = new Nurse("Елена Тимофеева", 1986);
-        Doctor alex = new Doctor("Александр Репин", 1994);
-        Doctor slava = new Doctor("Вячеслав Володин", 1956);
+    public void getProfiles() {
+        System.out.println("-------------");
+        System.out.println("Вывод списка пациентов с дополнительной информацией по скоростям: ");
+        for (Animal a : patients) {
+            System.out.println(a);
+            if (a instanceof Goable) {
+                System.out.println(a.getType() + " бегает со скоростью " + ((Goable) a).run());
+            }
+            if (a instanceof Flyable) {
+                System.out.println(a.getType() + " летает со скоростью " + ((Flyable) a).fly());
+            }
+            if (a instanceof Swimable) {
+                System.out.println(a.getType() + " плавает со скоростью " + ((Swimable) a).swim());
+            }
+            System.out.println("-------------");
+        }
+    }
 
-        //заполняем одно из полей класса clinic информацией о персонале
-        clinic.addPersonal(amanda);
-        clinic.addPersonal(lenka);
-        clinic.addPersonal(alex);
-        clinic.addPersonal(slava);
+    public void getFlyables() {
+        System.out.println("-------------");
+        System.out.println("Пациенты клиники, которые умеют летать:");
+        for (Animal a : patients) {
+            if (a instanceof Flyable) {
+                System.out.println(a);
+            }
+        }
+        System.out.println("-------------");
+    }
 
-        //вывод списка персонала
-        clinic.getPersonal();
+    public void getSwimables() {
+        System.out.println("-------------");
+        System.out.println("Пациенты клиники, которые умеют плавать:");
+        for (Animal a : patients) {
+            if (a instanceof Swimable) {
+                System.out.println(a);
+            }
+        }
+        System.out.println("-------------");
+    }
 
-        //увольнение сотрудника
-        clinic.removePersonal(slava);
-        clinic.getPersonal();
+    public void getGoables() {
+        System.out.println("-------------");
+        System.out.println("Пациенты клиники, которые умеют ходить:");
+        for (Animal a : patients) {
+            if (a instanceof Goable) {
+                System.out.println(a);
+            }
+        }
+        System.out.println("-------------");
+    }
 
-        //постановка диагноза доктором
-        System.out.println(jack);
-        alex.doDiagnose(jack);
-        System.out.println(jack);
+    public void getPersonal() {
+        System.out.println("-------------");
+        System.out.println("Список персонала клиники:");
+        for (Personal a : personal) {
+            System.out.println(a);
+        }
+        System.out.println("-------------");
+    }
+
+    public void removePersonal(Personal p) {
+        System.out.println("-------------");
+        personal.remove(p);
+        System.out.println(p + " - уволен");
+        System.out.println("-------------");
+    }
+}
 
         //проведение процедуры медсестрой
         lenka.doProcedure(jack);
