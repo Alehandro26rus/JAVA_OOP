@@ -1,8 +1,26 @@
-import animals.Animal;
+package org.example.animals;
 
-public class Duck extends Animal {
+import org.example.interfaces.Flyable;
+import org.example.interfaces.Goable;
+import org.example.interfaces.Swimable;
 
-    public Duck(String name){
-        super(name);
+public class Duck extends Animal implements Flyable, Goable, Swimable {
+    public Duck(String name) {
+        super.name = name;
+    }
+
+    @Override
+    public double swim() {
+        return 5;
+    }
+
+    @Override
+    public double run() {
+        return 2;
+    }
+
+    @Override
+    public double fly() {
+        return 20;
     }
 }
