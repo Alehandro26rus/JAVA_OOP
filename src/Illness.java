@@ -1,12 +1,17 @@
+package org.example;
+
 public class Illness {
-    String name;
 
-    public Illness(String name) {
-        this.name = name;
+    String title;
+
+    public Illness(String illness) {
+        title = illness;
     }
 
-    @Override
-    public String toString() {
-        return name;
+    public void setTitle(String title) {
+        this.title = title;
     }
-}
+
+    public String getTitle() {
+        return title;
+    }
